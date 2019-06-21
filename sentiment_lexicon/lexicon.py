@@ -26,7 +26,7 @@ class Lexicon:
 
     Examples:
         >>> Lexicon(['good'], [1])
-        <sentiment_lexicon.Lexicon object at ...>
+        <sentiment_lexicon.lexicon.Lexicon object at ...>
 
         >>> Lexicon(['good'], [])
         Traceback (most recent call last):
@@ -117,7 +117,7 @@ class Lexicon:
 
         Examples:
             >>> Lexicon.from_labelled_text(['This is good'], ['This is bad'])
-            <sentiment_lexicon.Lexicon object at ...>
+            <sentiment_lexicon.lexicon.Lexicon object at ...>
         '''
         documents = {'positive': positive, 'negative': negative}
         labels = documents.keys()
