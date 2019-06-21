@@ -1,0 +1,22 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+sphinx = "*"
+pytest = "*"
+setuptools = "*"
+sphinx-autodoc-typehints = "*"
+pytest-cov = "*"
+
+[packages]
+pandas = "*"
+numpy = "*"
+
+[requires]
+python_version = "3.7"
+
+[scripts]
+docs = "sphinx-build -b html docs/source docs/"
+test = "pytest --doctest-modules"
