@@ -10,6 +10,7 @@ setuptools = "*"
 sphinx-autodoc-typehints = "*"
 pytest-cov = "*"
 python-githooks = "*"
+wheel = "*"
 
 [packages]
 pandas = "*"
@@ -21,3 +22,4 @@ python_version = "3.7"
 [scripts]
 docs = "sphinx-build -b html docs/source docs/"
 test = "pytest --doctest-modules"
+build = "python setup.py sdist bdist_wheel"
