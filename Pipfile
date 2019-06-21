@@ -9,6 +9,7 @@ pytest = "*"
 setuptools = "*"
 sphinx-autodoc-typehints = "*"
 pytest-cov = "*"
+python-githooks = "*"
 
 [packages]
 pandas = "*"
