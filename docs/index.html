@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Sentiment Lexicon Documentation &#8212; Lexicon  documentation</title>
+    <title>Sentiment Lexicon &#8212; Lexicon  documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -30,8 +30,31 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="sentiment-lexicon-documentation">
-<h1>Sentiment Lexicon Documentation<a class="headerlink" href="#sentiment-lexicon-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="sentiment-lexicon">
+<h1>Sentiment Lexicon<a class="headerlink" href="#sentiment-lexicon" title="Permalink to this headline">¶</a></h1>
+<p>Sentiment lexicon wrapper and generator.</p>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sentiment</span><span class="o">-</span><span class="n">lexicon</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The module provides a single class, <code class="docutils literal notranslate"><span class="pre">Lexicon</span></code>, that can be used as a simple wrapper around sentiment lexicon data.
+The sentiment value of a given word can be accessed via the <code class="docutils literal notranslate"><span class="pre">value</span></code> instance method.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sentiment_lexicon</span> <span class="kn">import</span> <span class="n">Lexicon</span>
+
+<span class="n">lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+
+<span class="n">lexicon</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">)</span> <span class="c1"># =&gt; 1</span>
+</pre></div>
+</div>
+<p>The class can also generate a sentiment lexicon based on positive and negative input documents.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="o">.</span><span class="n">from_labelled_text</span><span class="p">(</span><span class="n">positive_documents</span><span class="p">,</span> <span class="n">negative_documents</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>More information is available in the <a class="reference external" href="https://emilbaekdahl.github.io/sentiment_lexicon">documentation</a>.</p>
 <dl class="class">
 <dt id="sentiment_lexicon.Lexicon">
 <em class="property">class </em><code class="sig-prename descclassname">sentiment_lexicon.</code><code class="sig-name descname">Lexicon</code><span class="sig-paren">(</span><em class="sig-param">words</em>, <em class="sig-param">values</em>, <em class="sig-param">default=None</em>, <em class="sig-param">normalize=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sentiment_lexicon.Lexicon" title="Permalink to this definition">¶</a></dt>
@@ -78,6 +101,7 @@
 </dd></dl>
 
 </div>
+</div>
 
 
           </div>
@@ -85,6 +109,15 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Sentiment Lexicon</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">

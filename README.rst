@@ -5,14 +5,14 @@ Sentiment lexicon wrapper and generator.
 
 Installation
 ------------
-.. code:: python
+::
 
   pip install sentiment-lexicon
 
 
 Usage
 -----
-The module provides a single class, ``Lexicon``, that can be used as a simple wrapper around sentiment lexicon data. 
+The module provides a single class, ``Lexicon``, that can be used as a simple wrapper around sentiment lexicon data.
 The sentiment value of a given word can be accessed via the ``value`` instance method.
 
 .. code:: python
@@ -22,7 +22,7 @@ The sentiment value of a given word can be accessed via the ``value`` instance m
   lexicon = Lexicon(words, values)
 
   lexicon.value('good') # => 1
-  
+
 
 The class can also generate a sentiment lexicon based on positive and negative input documents.
 
@@ -30,5 +30,5 @@ The class can also generate a sentiment lexicon based on positive and negative i
 
   lexicon = Lexicon.from_labelled_text(positive_documents, negative_documents)
 
-More information is available in the `documentation 
-<https://emilbaekdahl.github.io/sentiment_lexicon>`_. 
+More information is available in the `documentation
+<https://emilbaekdahl.github.io/sentiment_lexicon>`_.
