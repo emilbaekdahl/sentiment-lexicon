@@ -3,7 +3,6 @@ from functools import reduce
 import pandas as pd
 import numpy as np
 import multiprocessing as mp
-import collections
 
 
 class Lexicon:
@@ -15,50 +14,53 @@ class Lexicon:
         words: List of words.
         values: List of values.
         default: The value given to words that are not in the lexicon.
-        normalize: The range in which all sentiment values should lie.
+        normalize: Determines if the values are normalized to [-1, 1].
 
     Attributes:
         default: The default value.
+        data: The lexicon data.
         range: The range that the sentiment values are spanning.
 
     Raises:
         ValueError: If :obj:`words` and :obj:`values` do not have the same length.
 
     Examples:
+        Creating a lexicon requires one sentiment value per word
+
         >>> Lexicon(['good'], [1])
         <sentiment_lexicon.lexicon.Lexicon object at ...>
+
+        otherwise an exception is raised.
 
         >>> Lexicon(['good'], [])
         Traceback (most recent call last):
         ...
         ValueError: words and values must have the same length
+
+        Normalizing the sentiment values is done by passing ``True`` as the ``normalize`` parameter.
+
+        >>> lexicon = Lexicon(['good', 'bad', 'maybe'], [10, -8, 2], normalize=True)
+        >>> lexicon.data
+        good     1.0
+        bad     -0.8
+        maybe    0.2
+        dtype: float64
     '''
     default: float
+    data: pd.Series
     range: Tuple[float, float]
 
-    def __init__(self, words: List[str], values: List[float], default: Optional[float] = None, normalize: Optional[Tuple[float, float]] = None):
+    def __init__(self, words: List[str], values: List[float], default: Optional[float] = None, normalize: Optional[bool] = False):
         if len(words) != len(values):
             raise ValueError('words and values must have the same length')
 
-        self.__lexicon = pd.DataFrame(
-            {'word': words, 'value': values}).set_index('word')
-
         self.default = default
-        self.range = normalize if isinstance(normalize, tuple) else (
-            self.__lexicon.value.min(), self.__lexicon.value.max())
+        self.data = pd.Series(values, index=words, dtype='float')
 
-    @property
-    def lexicon(self) -> pd.DataFrame:
-        '''Returns the raw lexicon data
-        Examples:
-            >>> lex = Lexicon(['good', 'bad'], [1, -1])
-            >>> lex.lexicon # doctest: +NORMALIZE_WHITESPACE
-                  value
-            word
-            good      1
-            bad      -1
-        '''
-        return self.__lexicon
+        if normalize:
+            self.data /= self.data.abs().max()
+
+        self.range = (self.data.min(), self.data.max())
 
     def value(self, word: str, default: Optional[float] = None) -> float:
         '''Returns the sentiment value of a given word.
@@ -77,7 +79,7 @@ class Lexicon:
         Examples:
             >>> lexicon = Lexicon(['good'], [1])
             >>> lexicon.value('good')
-            1
+            1.0
 
             >>> lexicon.value('bad')
             Traceback (most recent call last):
@@ -94,7 +96,7 @@ class Lexicon:
         default = default if default is not None else self.default
 
         try:
-            return self.__lexicon.at[word, 'value']
+            return self.data.at[word]
         except KeyError as error:
             if default is not None:
                 return default

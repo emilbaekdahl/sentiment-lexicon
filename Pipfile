@@ -11,6 +11,7 @@ sphinx-autodoc-typehints = "*"
 pytest-cov = "*"
 python-githooks = "*"
 wheel = "*"
+bump2version = "*"
 
 [packages]
 pandas = "*"
@@ -23,3 +24,4 @@ python_version = "3.7"
 docs = "sphinx-build -b html docs/source docs/"
 test = "pytest --doctest-modules"
 build = "python setup.py sdist bdist_wheel"
+clean = "python setup.py clean --all"

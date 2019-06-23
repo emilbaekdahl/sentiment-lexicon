@@ -57,16 +57,16 @@ The sentiment value of a given word can be accessed via the <code class="docutil
 <p>More information is available in the <a class="reference external" href="https://emilbaekdahl.github.io/sentiment_lexicon">documentation</a>.</p>
 <dl class="class">
 <dt id="sentiment_lexicon.Lexicon">
-<em class="property">class </em><code class="sig-prename descclassname">sentiment_lexicon.</code><code class="sig-name descname">Lexicon</code><span class="sig-paren">(</span><em class="sig-param">words</em>, <em class="sig-param">values</em>, <em class="sig-param">default=None</em>, <em class="sig-param">normalize=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sentiment_lexicon.Lexicon" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">sentiment_lexicon.</code><code class="sig-name descname">Lexicon</code><span class="sig-paren">(</span><em class="sig-param">words</em>, <em class="sig-param">values</em>, <em class="sig-param">default=None</em>, <em class="sig-param">normalize=False</em><span class="sig-paren">)</span><a class="headerlink" href="#sentiment_lexicon.Lexicon" title="Permalink to this definition">¶</a></dt>
 <dd><p>A class wrapping a sentiment lexicon.</p>
-<p>Provides a <code class="xref py py-meth docutils literal notranslate"><span class="pre">value()</span></code> method for finding the sentiment value of a word.</p>
+<p>Provides a <a class="reference internal" href="#sentiment_lexicon.Lexicon.value" title="sentiment_lexicon.Lexicon.value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">value()</span></code></a> method for finding the sentiment value of a word.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>words</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of words.</p></li>
 <li><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – List of values.</p></li>
 <li><p><strong>default</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – The value given to words that are not in the lexicon.</p></li>
-<li><p><strong>normalize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]]) – The range in which all sentiment values should lie.</p></li>
+<li><p><strong>normalize</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Determines if the values are normalized to [-1, 1].</p></li>
 </ul>
 </dd>
 </dl>
@@ -74,6 +74,12 @@ The sentiment value of a given word can be accessed via the <code class="docutil
 <dt id="sentiment_lexicon.Lexicon.default">
 <code class="sig-name descname">default</code><a class="headerlink" href="#sentiment_lexicon.Lexicon.default" title="Permalink to this definition">¶</a></dt>
 <dd><p>The default value.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="sentiment_lexicon.Lexicon.data">
+<code class="sig-name descname">data</code><a class="headerlink" href="#sentiment_lexicon.Lexicon.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>The lexicon data.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -88,16 +94,101 @@ The sentiment value of a given word can be accessed via the <code class="docutil
 </dd>
 </dl>
 <p class="rubric">Examples</p>
+<p>Creating a lexicon requires one sentiment value per word</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lexicon</span><span class="p">([</span><span class="s1">&#39;good&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
 <span class="go">&lt;sentiment_lexicon.lexicon.Lexicon object at ...&gt;</span>
 </pre></div>
 </div>
+<p>otherwise an exception is raised.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lexicon</span><span class="p">([</span><span class="s1">&#39;good&#39;</span><span class="p">],</span> <span class="p">[])</span>
 <span class="gt">Traceback (most recent call last):</span>
 <span class="c">...</span>
 <span class="gr">ValueError</span>: <span class="n">words and values must have the same length</span>
 </pre></div>
 </div>
+<p>Normalizing the sentiment values is done by passing <code class="docutils literal notranslate"><span class="pre">True</span></code> as the <code class="docutils literal notranslate"><span class="pre">normalize</span></code> parameter.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="p">([</span><span class="s1">&#39;good&#39;</span><span class="p">,</span> <span class="s1">&#39;bad&#39;</span><span class="p">,</span> <span class="s1">&#39;maybe&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span><span class="o">.</span><span class="n">data</span>
+<span class="go">good     1.0</span>
+<span class="go">bad     -0.8</span>
+<span class="go">maybe    0.2</span>
+<span class="go">dtype: float64</span>
+</pre></div>
+</div>
+<dl class="method">
+<dt id="sentiment_lexicon.Lexicon.value">
+<code class="sig-name descname">value</code><span class="sig-paren">(</span><em class="sig-param">word</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#sentiment_lexicon.Lexicon.value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the sentiment value of a given word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The word to find sentiment value for.</p></li>
+<li><p><strong>default</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – The value to return if not value if found for <code class="xref py py-obj docutils literal notranslate"><span class="pre">word</span></code>.
+Takes precedence over the <a class="reference internal" href="#sentiment_lexicon.Lexicon.default" title="sentiment_lexicon.Lexicon.default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></a> attribute of <a class="reference internal" href="#sentiment_lexicon.Lexicon" title="sentiment_lexicon.Lexicon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If <code class="xref py py-obj docutils literal notranslate"><span class="pre">word</span></code> is not found in the lexicon and a <a class="reference internal" href="#sentiment_lexicon.Lexicon.default" title="sentiment_lexicon.Lexicon.default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></a> is not provided.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The sentiment value for the word.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="p">([</span><span class="s1">&#39;good&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;good&#39;</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;bad&#39;</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">KeyError</span>: <span class="n">&#39;bad not present in the lexicon&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span> <span class="o">=</span> <span class="n">Lexicon</span><span class="p">([</span><span class="s1">&#39;good&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;bad&#39;</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">lexicon</span><span class="o">.</span><span class="n">value</span><span class="p">(</span><span class="s1">&#39;bad&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">-1</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="sentiment_lexicon.Lexicon.from_labelled_text">
+<em class="property">static </em><code class="sig-name descname">from_labelled_text</code><span class="sig-paren">(</span><em class="sig-param">positive</em>, <em class="sig-param">negative</em>, <em class="sig-param">min_df=0.0</em>, <em class="sig-param">alpha=0.5</em>, <em class="sig-param">ignore_case=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#sentiment_lexicon.Lexicon.from_labelled_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a <a class="reference internal" href="#sentiment_lexicon.Lexicon" title="sentiment_lexicon.Lexicon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></a> based on positive and negative documents using pointwise mututal information.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>positive</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of positive documents.</p></li>
+<li><p><strong>negative</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – List of negative documents.</p></li>
+<li><p><strong>min_df</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – The number of documents that a word must occur in before it is added to the lexicon.</p></li>
+<li><p><strong>alpha</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Determines how much the PMI of the two classes affect each other when computing the sentiment values.</p></li>
+<li><p><strong>ignore_case</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>]) – Determines if the case of the words in the documents are ignored.
+If <code class="docutils literal notranslate"><span class="pre">True</span></code>, the words <cite>good</cite> and <cite>Good</cite> will be treated as the same.</p></li>
+<li><p><strong>kwargs</strong> – Parameters passed to the <a class="reference internal" href="#sentiment_lexicon.Lexicon" title="sentiment_lexicon.Lexicon"><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></a> constructor.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lexicon</span><span class="o">.</span><span class="n">from_labelled_text</span><span class="p">([</span><span class="s1">&#39;This is good&#39;</span><span class="p">],</span> <span class="p">[</span><span class="s1">&#39;This is bad&#39;</span><span class="p">])</span>
+<span class="go">&lt;sentiment_lexicon.lexicon.Lexicon object at ...&gt;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </div>
