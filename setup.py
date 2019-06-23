@@ -7,7 +7,7 @@ with open(path.join(this_directory, 'README.rst'), encoding='utf-8') as readme:
 
 setup(
     name='sentiment_lexicon',
-    version='0.2.0',
+    version='0.2.1',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     packages=['sentiment_lexicon'],
