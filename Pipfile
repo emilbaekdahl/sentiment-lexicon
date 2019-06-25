@@ -12,6 +12,7 @@ pytest-cov = "*"
 python-githooks = "*"
 wheel = "*"
 bump2version = "*"
+autopep8 = "*"
 
 [packages]
 pandas = "*"

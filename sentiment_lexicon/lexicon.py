@@ -50,7 +50,8 @@ class Lexicon:
     data: pd.Series
     range: Tuple[float, float]
 
-    def __init__(self, words: List[str], values: List[float], default: Optional[float] = None, normalize: Optional[bool] = False):
+    def __init__(self, words: List[str], values: List[float],
+                 default: Optional[float] = None, normalize: Optional[bool] = False):
         if len(words) != len(values):
             raise ValueError('words and values must have the same length')
 
@@ -105,7 +106,8 @@ class Lexicon:
                     f'{word} not present in the lexicon') from error
 
     @staticmethod
-    def from_labelled_text(positive: List[str], negative: List[str], min_df: Optional[float] = 0.0, alpha: Optional[float] = 0.5, ignore_case: Optional[bool] = True, **kwargs) -> 'Lexicon':
+    def from_labelled_text(positive: List[str], negative: List[str], min_df: Optional[float] = 0.0,
+                           alpha: Optional[float] = 0.5, ignore_case: Optional[bool] = True, **kwargs) -> 'Lexicon':
         '''Generate a :class:`Lexicon` based on positive and negative documents using pointwise mututal information.
 
         Parameters:
@@ -197,10 +199,12 @@ def _add_dataframes(dataframes: List[pd.DataFrame]) -> pd.DataFrame:
         0     2   2.0   3.0
         1     3   3.0   4.0
     '''
-    return reduce(lambda acc, current: acc.add(current, fill_value=0), dataframes)
+    return reduce(lambda acc, current: acc.add(
+        current, fill_value=0), dataframes)
 
 
-def _count_words(document: str, ignore_case: Optional[bool] = True) -> pd.Series:
+def _count_words(document: str,
+                 ignore_case: Optional[bool] = True) -> pd.Series:
     '''Counts number of words in a document.
 
     Parameters:
@@ -225,12 +229,14 @@ def _count_words(document: str, ignore_case: Optional[bool] = True) -> pd.Series
     return pd.Series(words).value_counts().sort_index()
 
 
-def _helper(partition: List[str], label: str, ignore_case: Optional[bool] = False) -> pd.DataFrame:
+def _helper(partition: List[str], label: str,
+            ignore_case: Optional[bool] = False) -> pd.DataFrame:
     return _add_dataframes([_count_words(document, ignore_case=ignore_case).rename(
         f'{label}_total').to_frame().assign(**{f'{label}_doc': 1}) for document in partition])
 
 
-def _documents_word_count(documents: List[str], label: str, ignore_case: Optional[bool] = True) -> pd.DataFrame:
+def _documents_word_count(
+        documents: List[str], label: str, ignore_case: Optional[bool] = True) -> pd.DataFrame:
     '''Counts words in multiple :obj:`documents` of a given :obj:`label`.
 
     Parameters:
