@@ -182,6 +182,12 @@ If <code class="docutils literal notranslate"><span class="pre">True</span></cod
 <span class="go">&lt;sentiment_lexicon.lexicon.Lexicon object at ...&gt;</span>
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Lexicon</span><span class="o">.</span><span class="n">from_labelled_text</span><span class="p">([</span><span class="s1">&#39;This is good&#39;</span><span class="p">],</span> <span class="p">[])</span>
+<span class="gt">Traceback (most recent call last):</span>
+<span class="c">...</span>
+<span class="gr">ValueError</span>: <span class="n">there must be at least one positive and one negative document</span>
+</pre></div>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Lexicon</span></code></p>
