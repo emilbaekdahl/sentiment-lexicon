@@ -120,7 +120,16 @@ class Lexicon:
         Examples:
             >>> Lexicon.from_labelled_text(['This is good'], ['This is bad'])
             <sentiment_lexicon.lexicon.Lexicon object at ...>
+
+            >>> Lexicon.from_labelled_text(['This is good'], [])
+            Traceback (most recent call last):
+            ...
+            ValueError: there must be at least one positive and one negative document
         '''
+        if len(positive) == 0 or len(negative) == 0:
+            raise ValueError(
+                'there must be at least one positive and one negative document')
+
         documents = {'positive': positive, 'negative': negative}
         labels = documents.keys()
         total_columns = [f'{label}_total' for label in labels]
