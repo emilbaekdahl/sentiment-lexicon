@@ -1,8 +1,6 @@
 from setuptools import setup
-from os import path
 
-this_directory = path.abspath(path.dirname(__file__))
-with open(path.join(this_directory, 'README.rst'), encoding='utf-8') as readme:
+with open('./README.rst', encoding='utf-8') as readme:
     long_description = readme.read()
 
 setup(
@@ -15,5 +13,7 @@ setup(
     author='Emil Bækdahl',
     author_email="emilsbaekdahl@gmail.com",
     project_urls={'Source Code': 'https://github.com/emilbaekdahl/sentiment_lexicon',
-                  'Documentation': 'https://emilbaekdahl.github.io/sentiment_lexicon/'}
+                  'Documentation': 'https://emilbaekdahl.github.io/sentiment_lexicon/'},
+    classifiers=['Development Status :: 4 - Beta',
+                 'Intended Audience :: Developers', 'License :: OSI Approved :: MIT License']
 )
