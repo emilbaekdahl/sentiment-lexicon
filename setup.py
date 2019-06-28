@@ -5,7 +5,7 @@ with open('./README.rst', encoding='utf-8') as readme:
 
 setup(
     name='sentiment_lexicon',
-    version='0.2.2',
+    version='0.2.3',
     long_description=long_description,
     long_description_content_type='text/x-rst',
     packages=['sentiment_lexicon'],
