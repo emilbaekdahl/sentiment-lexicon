@@ -263,7 +263,7 @@ def _count_words(document: str, ignore_case: tp.Optional[bool] = True) -> pd.Ser
 
 
 def _helper(
-    partition: tp.List[str], label: str, ignore_case: tp.abcOptional[bool] = False
+    partition: tp.List[str], label: str, ignore_case: tp.Optional[bool] = False
 ) -> pd.DataFrame:
     return _add_dataframes(
         [
